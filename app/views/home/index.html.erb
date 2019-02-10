@@ -1,1 +1,9 @@
-Hello from home
+<div class="page-wrapper">
+  <section class="search-section">
+    <input type="text" id="search_input" placeholder="Search"/>
+    <button id="search_button" data-url=<%= meetups_path %> >Search</button>
+  </section>
+  <section class="result-section">
+    <%= render partial: 'shared/results', locals: { results: [] } %>
+  </section>
+</div>

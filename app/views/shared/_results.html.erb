@@ -1,0 +1,24 @@
+<table>
+  <thead>
+     <tr>
+       <th>Photo</th>
+       <th>Name</th>
+       <th>Location</th>
+       <th>Status</th>
+       <th>Category</th>
+     </tr>
+   </thead>
+   <tbody>
+     <% results.each do |item| %>
+       <tr>
+         <td>
+           <img src=<%= item.dig('key_photo', 'thumb_link') %> alt="" />
+         </td>
+         <td><%= item['name'] %></td>
+         <td><%= item['localized_location']%></td>
+         <td><%= item['status']%></td>
+         <td><%= item['meta_category']['name'] %></td>
+       </tr>
+     <% end %>
+   </tbody>
+</table>
