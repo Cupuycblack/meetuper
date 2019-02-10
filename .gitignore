@@ -6,7 +6,6 @@
 
 # Ignore bundler config.
 /.bundle
-config/redis.yml
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -23,3 +22,7 @@ config/redis.yml
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+config/settings.local.yml
+config/settings/*.local.yml
+config/environments/*.local.yml
