@@ -1,0 +1,2 @@
+var elem = document.getElementsByClassName('result-section')[0]
+elem.innerHTML = '<%= escape_javascript(render partial: "shared/results", locals: { results: @result[:results] }) %>'
