@@ -5,6 +5,7 @@ class ProcessRequest
     client = ClientFactory.new(options['type']).create_client
     client.prepare(options['url'], options['params'])
     response = client.execute
-    RedisService.set(options['key'], client.parse_response(response.to_json), ex: client.expire_time)
+    RedisService.set(options['key'], client.parse_response(response).to_json,
+                                     ex: client.expire_time)
   end
 end
