@@ -1,0 +1,7 @@
+var elem = document.getElementsByClassName('result-section')[0]
+<% if @groups.size > 0 %>
+  elem.innerHTML = '<%= escape_javascript(render partial: "shared/results", locals: { results: @groups }) %>'
+  clearInterval(window.pollInterval)
+<% else %>
+  elem.innerHTML = '<div>Loading...</div>'
+<% end %>
