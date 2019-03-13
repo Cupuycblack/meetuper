@@ -1,11 +1,13 @@
-module RedisService
+module MeetupDataService
   class << self
     def set(key, value, options)
       redis.set(key, value, options)
     end
 
     def get(key)
-      redis.get(key)
+      res = redis.get(key)
+      return nil unless res
+      JSON.parse(res)
     end
 
     private

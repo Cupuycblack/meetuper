@@ -6,10 +6,10 @@ class CacheQueryService
   end
 
   def get
-    unless RedisService.get(options[:key]).nil?
+    unless MeetupDataService.get(options['key']).nil?
       return {
         cached: true,
-        results: JSON.parse(RedisService.get(options[:key]))
+        results: MeetupDataService.get(options['key'])
       }
     end
     send_request
@@ -17,8 +17,12 @@ class CacheQueryService
 
   private
 
+  def async?
+    true
+  end
+
   def send_request
-    if options[:async]
+    if async?
       perform_async_request
     else
       perform_request
@@ -26,21 +30,12 @@ class CacheQueryService
   end
 
   def perform_async_request
-    Resque.enqueue(
-      ProcessRequest,
-      key: options[:key],
-      type: options[:type],
-      url: options[:url],
-      params: options[:params]
-    )
-    { async: true, key: options[:key] }
+    Resque.enqueue(ProcessRequest, options)
+    { async: true, key: options['key'] }
   end
 
   def perform_request
-    client = ClientFactory.new(options[:type]).create_client
-    client.prepare(options[:url], options[:params])
-    response = client.execute
-    RedisService.set(options[:key], client.parse_response(response).to_json, ex: client.expire_time)
-    { async: false, results: JSON.parse(response.to_json) }
+    response = ProcessRequest.perform(options)
+    { async: false, results: JSON.parse(response) }
   end
 end

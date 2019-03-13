@@ -5,7 +5,8 @@ class ClientFactory
   end
 
   def create_client
-    if type == 'meetup'
+    case type
+    when 'meetup'
       MeetupClient.new(api_key: Settings.meetup_api_key)
     else
       raise "Unknown client type: #{type}"

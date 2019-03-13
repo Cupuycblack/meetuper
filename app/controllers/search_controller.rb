@@ -3,7 +3,6 @@ class SearchController < ApplicationController
 
   def index
     @result = CacheQueryService.new(cache_params).get
-    render json: @result if @result[:key]
   end
 
   def poll
@@ -14,17 +13,16 @@ class SearchController < ApplicationController
 
   def cache_params
     {
-      async: true,
-      key: query_params.to_query,
-      type: 'meetup',
-      params: query_params.to_hash,
-      url: MEETUP_GROUP_PATH
+      'key' => query_params.to_query,
+      'type' => 'meetup',
+      'params' => query_params.to_hash,
+      'url' => MEETUP_GROUP_PATH
     }
   end
 
   def groups_data
-    return [] if poll_params.empty? || RedisService.get(poll_params[:poll_key]).nil?
-    JSON.parse(RedisService.get(poll_params[:poll_key]))
+    return [] if poll_params.empty? || MeetupDataService.get(poll_params[:poll_key]).nil?
+    MeetupDataService.get(poll_params[:poll_key])
   end
 
   def poll_params
