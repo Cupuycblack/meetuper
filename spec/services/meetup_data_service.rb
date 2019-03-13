@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe RedisService do
+describe MeetupDataService do
   subject { described_class }
   describe '#set' do
     let(:key) { 'test' }

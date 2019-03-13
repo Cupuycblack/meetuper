@@ -1,0 +1,17 @@
+<div class="page-wrapper">
+  <section class="search-section">
+    <%= form_tag root_path, method: :get do %>
+      <%= text_field_tag :location %>
+      <%= submit_tag 'Search' %>
+    <% end %>
+  </section>
+  <section class="result-section">
+  <% if @result[:async] %>
+    <script>
+      pollResults('<%= poll_path %>', '<%= @result[:key]%>')
+    </script>
+  <% else %>
+      <%= render partial: 'shared/results', locals: { results: @result[:results] } %>
+  <% end %>
+  </section>
+</div>
