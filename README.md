@@ -42,7 +42,7 @@ rbenv install 2.6.0
 Using [Bundler](https://github.com/bundler/bundler)
 
 ```shell
-bundle && yarn
+bundle
 ```
 
 ## Serve
